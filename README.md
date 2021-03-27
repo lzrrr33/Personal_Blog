@@ -2,7 +2,7 @@
 
 ## 简介
 
-自己在学习nodejs时做的一个个人网站，会持续迭代所有功能，项目github：
+自己在学习nodejs时做的一个个人网站，会持续迭代所有功能，项目github：https://github.com/lzrrr33/Personal_Blog
 
 采用框架：nodejs+express+element-ui+mysql
 
