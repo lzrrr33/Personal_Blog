@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html style="background:rgb(239, 243, 245) ">
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="//unpkg.com/element-ui@2.15.1/lib/theme-chalk/index.css">
+
+    <link rel="stylesheet" href="css/index2.css">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="//unpkg.com/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/element-ui@2.15.1/lib/index.js"></script>
+
+    <link rel="stylesheet" href="css/github-markdown.css">
+
+
+</head>
+<body>
+
+<div id="app" style="background: #eff3f5">
+    <%-include('navigator.ejs')%>
+
+    <el-row :gutter="20">
+        <el-col :span="6"><div style="visibility: hidden">space</div></el-col>
+        <el-col :span="12">
+            <div style="padding-left: 10px;padding-right: 10px;margin: 65px;background: white;border-radius: 0;" >
+
+                <div class="column">
+                    <div class="column_title">
+                        <el-link style="font-size: 35px;color: black;margin: 20px;" type="info" ><%=column.ColumnName%></el-link>
+                    </div>
+                    <div style="font-size: 13px;color: cadetblue;">
+                            <span class="column_messages" >
+                                文章数量:<%=column.BlogNum%>
+                            </span >
+                            <span class="column_messages">
+                                <%var date = column.CreateTime; console.log(date)%>
+                                创建时间：<%=date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate()%>
+                            </span>
+                        <span class="column_messages">
+
+                            访问量：0
+                            </span>
+                    </div>
+                    <el-divider ></el-divider>
+                </div>
+
+                <div id="blog_container">
+
+                    <%for(var i=0;i<blogs.length;i++){%>
+                    <div class="blog">
+                        <div class="blog_title" style="padding-top: 0">
+                            <a style="font-size: 23px;color:#666666;text-decoration:none;" href="http://localhost:3000/Blog?id=<%=blogs[i].id%>"><%=blogs[i].title%></a>
+
+                        </div>
+                        <div>
+
+                        <span class="blog_tag">
+                            标签：<%=blogs[i].Tags%>
+                        </span>
+                        <span class="blog_time">
+                                <%var blogdate = blogs[i].CreateTime;%>
+                                <%=blogdate.getFullYear()+"/"+blogdate.getMonth()+"/"+blogdate.getDate()+"/"+blogdate.getHours()+":"+blogdate.getMinutes()%>
+                        </span>
+
+                        </div>
+                        <el-divider ></el-divider>
+                    </div>
+                    <%}%>
+                </div>
+
+            </div>
+        </el-col>
+        <el-col :span="6"><div style="visibility: hidden">space</div></el-col>
+    </el-row>
+</div>
+
+
+<!--</div>-->
+<script>
+    var Main = {
+        data() {
+            return {
+                drawer1: false,
+                drawer2: false,
+                direction1:'rtl',
+                direction2:'ltr',
+                activeIndex: '2',
+                activeName: '0',
+            };
+        }
+    };
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#app')
+
+</script>
+</body></html>

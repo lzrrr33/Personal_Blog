@@ -1,0 +1,85 @@
+
+<div id="navigator">
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
+        <el-menu-item index="1" @click="drawer1 = true">我的博客</el-menu-item>
+        <el-menu-item index="2" @click="drawer2 = true">我的专栏</el-menu-item>
+        <el-menu-item index="3">成长杂谈</el-menu-item>
+        <el-menu-item index="4" disabled>我的Vlog</el-menu-item>
+        <el-submenu index="5" >
+            <template slot="title">小游戏</template>
+            <el-menu-item index="2-1">卡牌连连看</el-menu-item>
+            <el-menu-item index="2-2">JustJump</el-menu-item>
+            <el-menu-item index="2-3">别踩白块！</el-menu-item>
+
+        </el-submenu>
+        <el-menu-item index="6"  style="float: right"><a href="http://localhost:3000/" style="color:#666666;text-decoration:none;">faizer 的个人空间 <i class="el-icon-user-solid"> </i></a></el-menu-item>
+    </el-menu>
+</div>
+
+<div class="line"></div>
+
+<el-drawer
+        title="专栏"
+        :visible.sync="drawer2"
+        :direction="direction2"
+        :with-header="false">
+    <template>
+        <div class="bloglist">我的专栏</div>
+        <%var column=columnmessage%>
+        <div id="blog_container">
+
+            <%for(var i=0;i<column.length;i++){%>
+            <div class="blog">
+                <div class="blog_title">
+                    <a style="color:#666666;text-decoration:none;" href="http://localhost:3000/Column?id=<%=column[i].id%>"><%=column[i].ColumnName%></a>
+
+                </div>
+                <div>
+                        <span class="blog_tag">
+                            num:(<%=column[i].BlogNum%>)
+                        </span>
+                    <span class="blog_time">
+                        <%var date = column[i].CreateTime;%>
+                        创建时间：<%=date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate()%>
+                        </span>
+                </div>
+                <el-divider ></el-divider>
+            </div>
+            <%}%>
+        </div>
+    </template>
+</el-drawer>
+
+<el-drawer
+        title="博客"
+        :visible.sync="drawer1"
+        :direction="direction1"
+        :with-header="false">
+
+    <template>
+        <div class="bloglist" >博客列表</div>
+        <%var blogs=blogmessage%>
+        <div class="blog_container"  class="infinite-list" >
+
+            <%for(var i=blogs.length-1;i>=0;i--){%>
+            <div class="blog" >
+                <div class="blog_title">
+                    <a style="color:#666666;text-decoration:none;" href="http://localhost:3000/Blog?id=<%=blogs[i].id%>"><%=blogs[i].title%></a>
+
+                </div>
+                <div>
+                        <span class="blog_tag">
+                            <%=blogs[i].Tags%>
+                        </span>
+                    <span class="blog_time">
+                        <%var date = blogs[i].CreateTime;%>
+                        <%=date.getFullYear()+"/"+date.getMonth()+"/"+date.getDate()%>
+                        </span>
+                </div>
+                <el-divider ></el-divider>
+            </div>
+            <%}%>
+        </div>
+    </template>
+
+</el-drawer>

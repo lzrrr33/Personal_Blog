@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="//unpkg.com/element-ui@2.15.1/lib/theme-chalk/index.css">
+
+    <link rel="stylesheet" href="css/index2.css">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="//unpkg.com/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/element-ui@2.15.1/lib/index.js"></script>
+
+</head>
+<body>
+
+<script src="//unpkg.com/vue/dist/vue.js"></script>
+<script src="//unpkg.com/element-ui@2.15.1/lib/index.js"></script>
+<div id="app">
+    <el-row :gutter="20">
+        <el-col :span="6"><div style="visibility: hidden">space</div></el-col>
+            <el-col :span="12">
+                    <div style="padding: 8px 16px;background-color: #ecf8ff;border-radius: 4px;border-left: 5px solid #50bfff;margin: 20px 0;"><i class="el-icon-document" style="color: #000000"></i>
+                        <span slot="title" style="font-size: 14px;color: #5e6d82;line-height: 1.5em;">博客上传</span></div>
+                    <el-form ref="form" :model="form" label-width="80px" enctype="multipart/form-data">
+                        <el-form-item label="Title">
+                            <el-input v-model="form.title"></el-input>
+                        </el-form-item>
+
+                        <el-form-item label="标 签">
+                            <el-input v-model="form.tag"></el-input>
+                        </el-form-item>
+
+
+                        <el-form-item label="专 栏">
+                            <el-radio-group v-model="form.columnId">
+                                <%for(var i=0;i<column.length;i++){%>
+
+                                <el-radio label="<%=column[i].id%>" ><%=column[i].ColumnName%></el-radio>
+
+                                <%}%>
+                                <el-button >+新增专栏</el-button>
+                            </el-radio-group>
+                        </el-form-item>
+
+                        <el-form-item label="描 述">
+                            <el-input type="textarea" v-model="form.desc"></el-input>
+                        </el-form-item>
+                        <el-form-item label="上传">
+                            <el-upload
+                                    class="upload-demo"
+                                    ref="upload"
+                                    action="/uploadmd"
+                                    :file-list="fileList"
+                                    :auto-upload="false">
+                                <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+                                <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+                                <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                            </el-upload>
+                        <el-form-item>
+                        </el-form-item>
+                            <el-button type="primary" @click="onSubmit">提交</el-button>
+
+                        </el-form-item>
+                    </el-form>
+            </el-col>
+
+        <el-col :span="6"><div style="visibility: hidden">space</div></el-col>
+    </el-row>
+</div>
+<script>
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            form: {
+                title: '',
+                tag:'',
+                type: [],
+                desc: '',
+                mdfile:"",
+            },
+            fileList:[],
+        },
+        methods: {
+            onSubmit() {
+                console.log('submit!');
+                $.post("/doupload",
+                    {
+                        title: this.form.title,
+                        tag: this.form.tag,
+                        columnId: this.form.columnId,
+                        desc: this.form.desc,
+                        mdfile: $(".el-upload-list__item-name")[0].innerText,
+                    },
+                    function(data,status){
+                        alert("Data: " + data + "\nStatus: " + status);
+                        location.reload();
+                    });
+            },
+            submitUpload() {
+                this.$refs.upload.submit();
+            },
+
+
+        }
+    });
+</script>
+</body></html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="//unpkg.com/element-ui@2.15.1/lib/theme-chalk/index.css">
+
+    <link rel="stylesheet" href="css/index2.css">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="//unpkg.com/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/element-ui@2.15.1/lib/index.js"></script>
+
+    <link rel="stylesheet" href="css/github-markdown.css">
+
+
+</head>
+<body>
+
+<div id="app" style="background: #eff3f5">
+    <%-include('navigator.ejs')%>
+
+    <el-row :gutter="20">
+        <el-col :span="6"><div style="visibility: hidden">space</div></el-col>
+        <el-col :span="12">
+            <div class="markdown" style="background: white;padding: 0 30px">
+                <article class="markdown-body">
+                    <%-md%>
+                </article>
+            </div>
+        </el-col>
+        <el-col :span="6"><div style="visibility: hidden">space</div></el-col>
+    </el-row>
+</div>
+
+
+<!--</div>-->
+<script>
+    var Main = {
+        data() {
+            return {
+                drawer1: false,
+                drawer2: false,
+                direction1:'rtl',
+                direction2:'ltr',
+                activeIndex: '1',
+                activeName: '0',
+            };
+        }
+    };
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#app')
+
+</script>
+</body></html>
